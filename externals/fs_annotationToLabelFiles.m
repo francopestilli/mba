@@ -1,9 +1,9 @@
 function cmd = fs_annotationToLabelFiles(fs_subject,annotationFileName,hemisphere,labelsDir)
 %
 % Creates .label files from a FreeSurfer annotation file, which is created
-% during the reconall egementation and percellation process.
+% during the reconall segementation and percellation process.
 %
-%  [niftiRoiName, niftiRoi] = fs_annotationToLabelFiles(fs_subject,[annotationFileName],[hemisphere],[regMgzFile])
+%  cmd = fs_annotationToLabelFiles(fs_subject,[annotationFileName],[hemisphere],[regMgzFile])
 %
 % 
 % INPUTS:
@@ -49,7 +49,7 @@ if notDefined('annotationFileName')
 end
 
 if notDefined('hemisphere')
-    fprintf('\n[%s] No hemisphere passed in.\n Running command for both hemispheres.\n',mfilename)
+    error('\n[%s] No hemisphere passed in.\n Running command for both hemispheres.\n',mfilename)
     hemisphere = {'rh','lh'}; 
 end
 
