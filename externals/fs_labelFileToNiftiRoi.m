@@ -67,7 +67,6 @@ if notDefined('hemisphere')
 end
 
 if notDefined('regMgzFile')
-    fsSubDir   = getenv('SUBJECTS_DIR');
     fprintf('[%s] No registration file passed in, attempting to register to  %s/%s/mri/rawavg.mgz.\n', ...
             mfilename,fsSubDir,fs_subject) 
     regMgzFile = fullfile(fsSubDir,fs_subject,'mri/rawavg.mgz');
@@ -77,6 +76,7 @@ if notDefined('niftiRoiName')
    error('[%s] the name for the output file (niftiRoiName) is necessary...',mfilename)
 else
     p = fileparts(niftiRoiName);
+    niftiRoiName(niftiRoiName == '.') = '_';
     if isempty(p)
         niftiRoiName = fullfile(fsSubDir,fs_subject,'label',niftiRoiName);       
         fprintf('\n[%s] niftiRoiName name passed without fullpath.\n Saving the ROI in FS default location:\n%s\n', ...
