@@ -7,7 +7,7 @@ function sh = mbaDisplayOverlay(niAnatomy, niOverlay, slice, overlayThresh, cmap
 %
 % Inputs:
 %
-% niAnatomy   - A 3D nifti image to use as base (anatomy) for the plot. 
+% niAnatomy- A 3D nifti image to use as base (anatomy) for the plot. 
 % slice       - Identifies the ACPC coordinates (in millimeter) 
 %               of the brain slice and the index of the data (4th dimension 
 %               of a volume). Slice is either:
