@@ -28,10 +28,10 @@ function [img, clip] = mbaImageHistogramClip(img, clip, normalize)
 %
 % Written by Franco Pestilli (c) Vistasoft, Stanford University 2013
 
-if notDefined('normalized'),normalize = true;end
+if notDefined('normalize'),normalize = true;end
 if notDefined('clip'),      
-    clip.min = 0.1;
-    clip.max = 0.9;
+    clip.min = 0;
+    clip.max = 1;
 end
 
 % Make sure the input image is of the proper class.
@@ -46,11 +46,16 @@ else
   %
   % Let's count the pixel occurrences in 255 bins (the standard length of a 
   % Color look-up-table)
-  [count,value] = hist(double(img(:)),256);
+  [count,value] = hist(double(img(:)),1024);
+  
+  % Transform in percentiles
+  p = cumsum(count)./sum(count);
   
   % Let's the pixel values to clip.
-  clip.maxVal = value(find(cumsum(count)./sum(count) >= clip.max, 1, 'first' ));
-  clip.minVal = value(find(cumsum(count)./sum(count) <= clip.min, 1, 'last' ));
+  %clip.maxVal = value(find(p >= clip.max, 1, 'last' ));
+  %clip.minVal = value(find(p <= clip.min, 1, 'first' ));
+  clip.maxVal  = value(min(find(p>=clip.max)));
+  clip.minVal = value(max(find(p<=clip.min)));
   
   if (isempty(clip.minVal))
       clip.minVal = value(1); 

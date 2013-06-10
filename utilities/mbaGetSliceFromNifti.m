@@ -24,6 +24,9 @@ function [img, x, y, z, plane] = mbaGetSliceFromNifti(nifti,slice)
 %
 % Written by Franco Pestilli (c) Vistasoft Stanford University 
 
+disp('mbaGetSliceFromNifti -- this function is obsolete . . . ')
+return
+
 % Check the consistency of the slce and return the plane identified by the
 % slice.
 [slice, plane] = mbaCheckSlice(slice);
@@ -68,7 +71,7 @@ elseif find(plane) == 2
 else
     img = squeeze(nifti.data(:,:,imIndx,fourDindx));
     [xdim,ydim] = size(img);
-        
+    
     % Define the minimum and maximum coordinates of the img in each
     % dimension in acpc mm space.
     z.min = slice(3); 
