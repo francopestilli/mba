@@ -31,8 +31,8 @@ function [img_rgb, x, y, z, plane, clip, img]  = mbaMakeImageFromNiftiSlice(nift
 
 if notDefined('cmap'), cmap = gray(128);end
 if notDefined('clip'),
-    clip.min = 0.25;
-    clip.max = 0.95;
+    clip.min = 0.01;
+    clip.max = 1;
 end
 
 % Get the slice requested from the nifti and resize it to 1mm isotropic.
@@ -42,11 +42,10 @@ end
 % Rescale the rage of pixel values for the image between 0 and 255, to
 % display properly with a colormap.
 
-clip.normalize = 1;
-img  = uint8(mbaImageHistogramClip(img,clip,clip.normalize).* size(cmap,1));
+clip.normalize = true;
+img  = mbaImageHistogramClip(img,clip,clip.normalize).* size(cmap,1);
 
 % Convert the scalar img to an RGB img based on the chosen colormap
-img_rgb = ind2rgb(img,cmap);
-img = double(img);
+img_rgb = ind2rgb(uint8(img),cmap);
 
 end
