@@ -1,4 +1,4 @@
-function [awo,x,y,z,xform,xAxes] = mbaMakeOverlay(niAnatomy,niOverlay,slice,overlayThresh,overlayAlpha,cmap,interpType)
+function [awo,x,y,z,xform,xAxes] = mbaMakeOverlay(niAnatomy,niOverlay,slice,overlayThresh,overlayAlpha,cmap,interpType,mmPerVox)
 % Determine current slices and return them (and potentially a lot of other info)
 %
 %  [awo,x,y,z,xform,xAxesm] = mbaMakeOverlay(niAnatomy,niOverlay,slice,overlayThresh,overlayAlpha,cmap,interpType)
@@ -13,20 +13,23 @@ else cmap = [cmap;0 0 0];end
 
 % Overlay information
 if notDefined('overlayThresh'),
-    overlayThresh = minmax(niftiGet(niOverlay,'data'));
+    overlayThresh = minmax(single(niftiGet(niOverlay,'data')));
 end
 if notDefined('overlayAlpha')
    overlayAlpha  = .8;
+end
+if notDefined('mmPerVox')
+    mmPerVox  = niftiGet(niAnatomy,'pix dim');
+    mmPerVox  = mmPerVox(1:3);
+    mmPerVox  = [.25 .25 .25];
 end
 
 % Ideally we should be able to set the max and min fo the images to be
 % dispalyed usign this parameter. I ahev not loked into it yet. FP.
 dispRange = [];
 
-% Get key parameters from the GUI
-mmPerVox  = niftiGet(niAnatomy,'pix dim');
-mmPerVox  = mmPerVox(1:3);
-anatXform = niftiGet(niAnatomy,'qto_xyz'); 
+% Get key parameters
+anatXform = niftiGet(niAnatomy,'qto_xyz');
 dims      = niftiGet(niAnatomy,'dim');
 dims      = dims(1:3);
 
@@ -63,17 +66,24 @@ xform = [[diag(mmPerVox) bbmm(1,:)'-1];[0 0 0 1]];
 
 % ----------- UP to HERE we are done with the image ------------ % 
 % ----------- Perhaps the code below is a different function --- %
-if(overlayAlpha>0)
-    %[overlayImg, oMmPerVoxel, oXform] = dtiGetCurAnat(handles,1);
+if (overlayAlpha > 0)
+    % Get the overlay data and xform
     overlayImg   = niftiGet(niOverlay,'data');
     oXform       = niftiGet(niOverlay,'qto_xyz');
-   
+    
     % Overlay needs to be between 0-1.
-    clip.min = min(overlayImg(:));
-    clip.max = max(overlayImg(:));
-    [overlayImg, clip]    = mbaImageHistogramClip(overlayImg, clip, true);
-    overlayImg(overlayImg<0) = 0;
-    overlayImg(overlayImg>1) = 1;
+    % Hereafter we normalize it unless it has been already normalized to be
+    % between 0-1.
+    mm = minmax(single(overlayImg(:)));
+    clip.min = nanmin(single(overlayImg(:)));
+    clip.max = nanmax(single(overlayImg(:)));
+    if (mm(1) ~= 0) && (mm(2) <= 1)
+        disp('here here')
+        [overlayImg, clip]= mbaImageHistogramClip(overlayImg, clip, true);
+    else
+        clip.minVal = nanmin(single(overlayImg(:)));
+        clip.maxVal = nanmax(single(overlayImg(:)));
+    end
     
     % Get the transformed overlay slices and combine them with the
     % background slices.
@@ -94,13 +104,13 @@ if(overlayAlpha>0)
     % normalized between 0-1. Here we normalize the threshold values
     % between 0 and 1.
     overlayThresh(1) = (overlayThresh(1) - clip.minVal) / clip.maxVal;
-    overlayThresh(2) = (overlayThresh(2) - clip.minVal) / clip.maxVal;
+    overlayThresh(2) =  overlayThresh(2) / clip.maxVal;
 
     % Now we create a logical mask indicating whch voxel will have a
     % combination of anatomy and overlay
     oVox2Show = false(size(aRgb));
     oVox2Show(repmat(oImg > overlayThresh(1),[1,1,3])) = true;  
-    oVox2Show(repmat(oImg > overlayThresh(2) ,[1,1,3])) = false;
+    oVox2Show(repmat(oImg > overlayThresh(2),[1,1,3])) = false;
 
     % Here we merge the overlay image (which is colorful) with the
     % background image created above, which is gray scale.

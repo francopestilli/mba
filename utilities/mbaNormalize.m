@@ -10,9 +10,6 @@ function [outmat, valRange] = mbaNormalize(inmat, lohi)
 
 if notDefined('lohi'), lohi = [0,1];end
 
-% Get the range of values in the original image
-valRange = [min(inmat(:)), max(inmat(:))];
-
 % Get the min value
 minval = min(inmat(:));
 

@@ -54,7 +54,7 @@ end
 
 % Overlay information
 if notDefined('overlayThresh'),
-    overlayThresh = minmax(niftiGet(niOverlay,'data'));
+    overlayThresh = minmax(single(niftiGet(niOverlay,'data')));
 end
 
 % Generate an RGB image contaning the brain slice and the overlay on top of
