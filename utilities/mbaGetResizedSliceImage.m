@@ -26,8 +26,8 @@ function [img, x, y, z, plane] = mbaGetResizedSliceImage(nifti,slice)
 %
 % Written by Franco Pestilli (c) Vistasoft, Stanford University 2013
 
-disp('mbaGetResizedSliceImage -- This function is OBSOLETE...')
-return
+%disp('mbaGetResizedSliceImage -- This function is OBSOLETE...')
+%return
 
 % Make sure only one plane was designated for plotting
 [slice, plane] = mbaCheckSlice(slice);
