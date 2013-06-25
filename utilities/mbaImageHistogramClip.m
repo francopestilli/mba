@@ -28,34 +28,33 @@ function [img, clip] = mbaImageHistogramClip(img, clip, normalize)
 %
 % Written by Franco Pestilli (c) Vistasoft, Stanford University 2013
 
-if notDefined('normalize'),normalize = true;end
+if notDefined('normalize'),normalize = false;end
 if notDefined('clip'),      
     clip.min = 0;
     clip.max = 1;
 end
 
 % Make sure the input image is of the proper class.
-if(~isfloat(img)), img = double(img);end
+if(~isfloat(img)), img = single(img);end
 
-if (clip.max>1)
+if (clip.max > 1)
   % Here we allow for passing pixel-intensity clip values
   clip.minVal = clip.min;
   clip.maxVal = clip.max;
 else
   % We treat the values as percentiles
   %
-  % Let's count the pixel occurrences in 255 bins (the standard length of a 
-  % Color look-up-table)
-  [count,value] = hist(double(img(:)),1024);
+  % Let's count the pixel occurrences.
+  [count,value] = hist(img(:),floor(numel(img)/10));
   
   % Transform in percentiles
   p = cumsum(count)./sum(count);
   
   % Let's the pixel values to clip.
-  %clip.maxVal = value(find(p >= clip.max, 1, 'last' ));
-  %clip.minVal = value(find(p <= clip.min, 1, 'first' ));
-  clip.maxVal  = value(min(find(p>=clip.max)));
-  clip.minVal = value(max(find(p<=clip.min)));
+  clip.maxVal = value(find(p >= clip.max, 1, 'last' ));
+  clip.minVal = value(find(p <= clip.min, 1, 'first' ));
+  %clip.maxVal  = value(min(find(p>=clip.max)));
+  %clip.minVal = value(max(find(p<=clip.min)));
   
   if (isempty(clip.minVal))
       clip.minVal = value(1); 

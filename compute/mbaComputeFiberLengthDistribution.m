@@ -1,7 +1,7 @@
-function [Lnorm, Lmm, meanFiberLen, stdFiberLen] = mbaComputeFiberLengthDistribution(fg, displayDist)
+function [Lnorm, Lmm, Mu, Sigma] = mbaComputeFiberLengthDistribution(fg, displayDist)
 % Calculate the distribution of fiber lengths for a fiber group
 %
-% [Lnorm, Lmm, meanFiberLen, stdFiberLen]=mbaComputeFiberLengthDistribution(fibers, displayDist)
+% [Lnorm, Lmm, Mu, Sigma]=mbaComputeFiberLengthDistribution(fibers, displayDist)
 %
 % INPUTS:
 % fibers   = A fiber group.
@@ -30,8 +30,8 @@ end
 Lmm = cellfun('length',fg.fibers);
 
 % Z-score the length
-% Here we take the log first so that the distribution of Lmm can be
-% goaussin and not clipped at 0.
+% Here we take the log first so that the distribution of Lmm is 'more'
+% gaussian and because it it not clipped at 0.
 [Lnorm, Mu, Sigma] = zscore(log10(Lmm));
 
 % Show a histagram

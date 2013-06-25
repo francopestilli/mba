@@ -24,8 +24,8 @@ function [img, x, y, z, plane] = mbaGetSliceFromNifti(nifti,slice)
 %
 % Written by Franco Pestilli (c) Vistasoft Stanford University 
 
-disp('mbaGetSliceFromNifti -- this function is obsolete . . . ')
-return
+% disp('mbaGetSliceFromNifti -- this function is obsolete . . . ')
+% return
 
 % Check the consistency of the slce and return the plane identified by the
 % slice.
