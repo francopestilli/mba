@@ -32,14 +32,14 @@ if (matlabpool('size') == 0), matlabpool open; poolwasopen=0; end
 if notDefined('figureHandle'), figureHandle = figure;end
 
 % Choose whether to plot simple lines or 3D lines.
-if notDefined('plot2d') plot2d = 0;end
+if notDefined('plot2d'), plot2d = 0;end
 
 % Set the alpha for the surfaces.
-if notDefined('faceAlpha') faceAlpha = 1;end
+if notDefined('faceAlpha'), faceAlpha = 1;end
 
 % Choose the resolution at which the fiber section s samples
 % Low when many fibers are passed in, high otherwise.
-if notDefined('numSurfaceFaces'), numSurfaceFaces = 50; end
+if notDefined('numSurfaceFaces'), numSurfaceFaces = 100; end
 if notDefined('fiberColor'),  
     fiberColor = [.84,.83,.99];
     colorType = 'single';
@@ -117,10 +117,13 @@ switch colorType
         end
  
     case {'map'}
-        for i_fiber = 1:length(showme)
+        for i_fiber = 1:length(showme)     
+            % Figure out the relative organiztion of the color and the
+            % coordinates
             % Make a surface for the fiber.
-            sHandle(i_fiber) = surf(X{i_fiber},Y{i_fiber},Z{i_fiber}, repmat(fiberColor{showme(i_fiber)},1,size(Z{i_fiber},2)), ...
-                'edgecolor', 'none',  'AmbientStrength',0.9,'FaceAlpha',repmat(faceAlpha{showme(i_fiber)},1,size(Z{i_fiber},2)));
+            sHandle(i_fiber) = surf(X{i_fiber},Y{i_fiber},Z{i_fiber}, ...
+                repmat(fiberColor{showme(i_fiber)},1,size(Z{i_fiber},2)), ...
+                'edgecolor', 'none',  'AmbientStrength',0.9,'FaceAlpha',.9);% ...
         end
         colormap(cMap)
     otherwise
