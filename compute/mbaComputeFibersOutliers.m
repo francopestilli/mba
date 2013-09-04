@@ -79,8 +79,8 @@ while cont ==1 && iter<=maxIter
     if length(fg.fibers) > 20
         
         % Transform the fiber group coordinates in a a gaussian distribution
-%        [~, weights] = mbaComputeFibersCoordsDistribution(fg, numNodes, centralTendency);
-        [SuperFiber, weights] = AFQ_FiberTractGaussian(fg, numNodes, 'mean');
+        [~, weights] = mbaComputeFibersCoordsDistribution(fg, numNodes, centralTendency);
+%        [SuperFiber, weights] = AFQ_FiberTractGaussian(fg, numNodes, 'mean');
 
         % Check if any fibers are farther than maxDist from any node.
         keep2 = weights < maxDist;

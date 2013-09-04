@@ -113,6 +113,12 @@ if smoothingKernel > 0
     niftiRoi.data  = single(dtiCleanImageMask(niftiRoi.data,smoothingKernel));
     niftiRoi.fname = sprintf('%s_smooth%imm', niftiRoiName, smoothingKernel);
     niftiWrite(niftiRoi);
+else
+   fprintf('[%s] Filling holes in the ROI before saving the nifti file.\n',mfilename)
+    niftiRoi       = niftiRead(niftiRoiName);
+    niftiRoi.data  = single(dtiCleanImageMask(niftiRoi.data,0,1));
+    niftiRoi.fname = sprintf('%s_filled', niftiRoiName);
+    niftiWrite(niftiRoi); 
 end
 
 % We return the nifti strutcture as second output

@@ -32,7 +32,6 @@ function sh = mbaDisplayOverlay(niAnatomy, niOverlay, slice, overlayThresh, cmap
 %
 % Example:
 %
-%
 % Written by Franco Pestilli (c) Vistasoft, Stanford University 2013
 
 % Check arguments
@@ -40,7 +39,7 @@ if notDefined('slice')
    slice =  [ 0 0 40];
 end
 if notDefined('cmap')
-    cmap = brighten(hot(2000),.1);
+    cmap = brighten(hot(257),.1);
 else
     cmap = eval(sprintf('%s(256)',cmap));
 end

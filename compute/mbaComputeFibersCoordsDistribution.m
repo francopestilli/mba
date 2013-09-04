@@ -19,7 +19,7 @@ function [SuperFiber, weights] = mbaComputeFibersCoordsDistribution(fg, numberOf
 %  
 %  EXAMPLE:
 % 
-%  Written by Franco PEstilli (c) Stanford University 2013.
+%  Written by Franco Pestilli (c) Stanford University 2013.
 %
 %  Based on dtiFiberGroupPropertyWeightedAverage
  

@@ -21,7 +21,7 @@ end
 if notDefined('mmPerVox')
     mmPerVox  = niftiGet(niAnatomy,'pix dim');
     mmPerVox  = mmPerVox(1:3);
-    mmPerVox  = [.25 .25 .25];
+    %mmPerVox  = [.25 .25 .25];
 end
 
 % Ideally we should be able to set the max and min fo the images to be
@@ -77,13 +77,13 @@ if (overlayAlpha > 0)
     mm = minmax(single(overlayImg(:)));
     clip.min = nanmin(single(overlayImg(:)));
     clip.max = nanmax(single(overlayImg(:)));
-    if (mm(1) ~= 0) && (mm(2) <= 1)
-        disp('here here')
+%     if (mm(1) ~= 0) && (mm(2) >= 1)
+        fprintf('[%s] Normalizing the overlay using: mbaImageHistogramClip.m ...\n',mfilename)
         [overlayImg, clip]= mbaImageHistogramClip(overlayImg, clip, true);
-    else
-        clip.minVal = nanmin(single(overlayImg(:)));
-        clip.maxVal = nanmax(single(overlayImg(:)));
-    end
+% else
+%     clip.minVal = nanmin(single(overlayImg(:)));
+%     clip.maxVal = nanmax(single(overlayImg(:)));
+% end
     
     % Get the transformed overlay slices and combine them with the
     % background slices.
