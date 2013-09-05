@@ -19,10 +19,7 @@ function [SuperFiber, weights] = mbaComputeFibersCoordsDistribution(fg, numberOf
 %  
 %  EXAMPLE:
 % 
-%  Written by Franco Pestilli (c) Stanford University 2013.
-%
-%  Based on dtiFiberGroupPropertyWeightedAverage
- 
+%  Written by Franco Pestilli (c) Stanford University 2013. 
 
 if notDefined('fg'), error('Fiber group required'); end
 if notDefined('numberOfNodes'), numberOfNodes=100; end
@@ -43,12 +40,12 @@ fc = horzcat(fg.fibers{:})';
 % Preallocate weights when you understand its size
 % weights = zeros(numberOfNodes,???)
 % Compute weights
-weights=zeros(numberOfNodes,numfibers);
-for node=1:numberOfNodes
+weights = zeros(numberOfNodes,numfibers);
+for node = 1:numberOfNodes
     % Compute gaussian weights y = mvnpdf(X,mu,SIGMA);
     % Returns the density of the multivariate normal distribution with zero
     % mean and identity covariance matrix, evaluated at each row of X.
-    X=fc((1:numberOfNodes:numfibers*numberOfNodes)+(node-1), :);
+    X = fc((1:numberOfNodes:numfibers*numberOfNodes)+(node-1), :);
     sigma = [SuperFiber.fibervarcovs{1}(1:3, node)'; ...
            0 SuperFiber.fibervarcovs{1}(4:5, node)';...
          0 0 SuperFiber.fibervarcovs{1}(6, node)'];
@@ -60,7 +57,7 @@ for node=1:numberOfNodes
     
     % Weights for the given node.Are calculated based on Mahalanobis
     % distance
-    d=bsxfun(@minus,X,mu); % each point minus the mean
+    d = bsxfun(@minus,X,mu); % each point minus the mean
     % This calculate tha mahalanobis distance of each point on each fiber
     % from the tract core
     weights(node,:) = sqrt(dot(d/(sigma), d,2))';
