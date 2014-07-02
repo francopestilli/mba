@@ -1,9 +1,9 @@
-function cmd = fs_annotationToLabelFiles(fs_subject,annotationFileName,hemisphere,labelsDir)
+function cmd = fs_annotationToLabelFiles(fs_subject,annotationFileName,hemisphere,labelsDir,fsSubDir)
 %
 % Creates .label files from a FreeSurfer annotation file, which is created
 % during the reconall segementation and percellation process.
 %
-%  cmd = fs_annotationToLabelFiles(fs_subject,[annotationFileName],[hemisphere],[regMgzFile])
+%  cmd = fs_annotationToLabelFiles(fs_subject,[annotationFileName],[hemisphere],[regMgzFile],[fsSubDir])
 %
 % 
 % INPUTS:
@@ -41,7 +41,7 @@ function cmd = fs_annotationToLabelFiles(fs_subject,annotationFileName,hemispher
 %   cmd            = fs_annotationToLabelFiles(subject,annotationFile)
 %
 % Written by Franco Pestilli (c) Stanford University, Vistasoft 2013
-fsSubDir   = getenv('SUBJECTS_DIR');
+if notDefined('fsSubDir'), fsSubDir   = getenv('SUBJECTS_DIR');end
 
 % Get the .label file. 
 if notDefined('annotationFileName')
@@ -49,14 +49,14 @@ if notDefined('annotationFileName')
 end
 
 if notDefined('hemisphere')
-    error('\n[%s] No hemisphere passed in.\n Running command for both hemispheres.\n',mfilename)
+    fprintf('\n[%s] No hemisphere passed in.\n Running command for both hemispheres.\n',mfilename)
     hemisphere = {'rh','lh'}; 
 end
 
 if notDefined('regMgzFile')
     fprintf('[%s] No registration file passed in, attempting to register to:\n%s/%s/mri/rawavg.mgz.\n', ...
             mfilename,fsSubDir,fs_subject) 
-    regMgzFile = fullfile(fsSubDir,fs_subject,'mri/rawavg.mgz');
+    regMgzFile = fullfile(fsSubDir,fs_subject,'mri','rawavg.mgz');
 end
 
 if notDefined('labelsDir')

@@ -24,7 +24,8 @@ function [figureHandle, lightHandle, sHandle] = mbaDisplayConnectome(fibers,figu
 
 tic
 fprintf('[%s] Displaying connectome... ',mfilename);
-%% Handling parallel processing
+
+% Handling parallel processing
 poolwasopen=1; % if a matlabpool was open already we do not open nor close one
 if (matlabpool('size') == 0), matlabpool open; poolwasopen=0; end
 
@@ -45,7 +46,7 @@ if notDefined('fiberColor'),
     colorType = 'single';
 end
 
-if notDefined('fiberRadius'),fiberRadius = .5;end
+if notDefined('fiberRadius'),fiberRadius = .35;end
 if notDefined('minNodesNum'), minNodesNum = 3; end
 
 % This is the number of edges eac surface has
@@ -84,7 +85,7 @@ showme  = find(numNodes >= minNodesNum);
 %t = cell(length(showme));n=t;b=t;
 parfor i_fiber = 1:length(showme)
     % Make a variable fiber radius:
-    fr = fiberRadius + (fiberRadius/10) .* randn(size(fibers{showme(i_fiber)}));
+    fr = fiberRadius + (fiberRadius/8) .* randn(size(fibers{showme(i_fiber)}));
     
     % Calculate the frame for tube representing the fiber.
     [t,n,b] = build3Dframe(fibers{showme(i_fiber)});
@@ -208,9 +209,10 @@ for i_node = 1:numNodes
     w       = fiber(i_node,:) + n_prime;
     
   end
-  X(i_node,:) = fiber(i_node, 1) + (fiber_radius(i_node)) * ( n_prime(1,1) * cos(theta) + b_prime(1,1) * sin(theta));
-  Y(i_node,:) = fiber(i_node, 2) + (fiber_radius(i_node)) * ( n_prime(1,2) * cos(theta) + b_prime(1,2) * sin(theta));
-  Z(i_node,:) = fiber(i_node, 3) + (fiber_radius(i_node)) * ( n_prime(1,3) * cos(theta) + b_prime(1,3) * sin(theta));
+  
+  X(i_node,:) = fiber(i_node, 1) + (fiber_radius(i_node,1)) * ( n_prime(1,1) * cos(theta) + b_prime(1,1) * sin(theta));
+  Y(i_node,:) = fiber(i_node, 2) + (fiber_radius(i_node,2)) * ( n_prime(1,2) * cos(theta) + b_prime(1,2) * sin(theta));
+  Z(i_node,:) = fiber(i_node, 3) + (fiber_radius(i_node,3)) * ( n_prime(1,3) * cos(theta) + b_prime(1,3) * sin(theta));
 end
 
 end % end function
