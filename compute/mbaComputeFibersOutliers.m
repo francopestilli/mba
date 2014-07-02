@@ -33,8 +33,7 @@ function [fg, keep] = mbaComputeFibersOutliers(fg,maxDist,maxLenStd,numNodes,cen
 
 % whether to compute fiber core with mean or median
 if notDefined('centralTendency'), centralTendency='mean';end
-
-% display the number of fibers that were removed in each iteration
+if notDefined('numNodes'), numNodes = 100;end
 if notDefined('count'), count = 0;end
 
 % maximum number of iterations

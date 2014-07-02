@@ -43,7 +43,7 @@ scale = scale(1:3);
 % The new dimensions will be the old dimensions multiplied by the scale
 % factors for the plane
 oldDim = size(img);
-newDim = oldDim .* scale(plane == 0)';
+newDim = oldDim .* abs(scale(plane == 0))';
 
 % Resize the img
 img = double(imresize(img,newDim));

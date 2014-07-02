@@ -1,8 +1,8 @@
-function [niftiRoiName, niftiRoi] = fs_labelFileToNiftiRoi(fs_subject,labelFileName,niftiRoiName,hemisphere,regMgzFile,smoothingKernel)
+function [niftiRoiName, niftiRoi] = fs_labelFileToNiftiRoi(fs_subject,labelFileName,niftiRoiName,hemisphere,regMgzFile,smoothingKernel,fsSubDir)
 %
 % Creates a nifti-1 ROI from a FreeSurfer .label file.
 %
-%  [niftiRoiName, niftiRoi] = fs_labelFileToNiftiRoi(fs_subject,labelFileName,niftiRoiName,[hemisphere],[regMgzFile],[smoothingKernel])
+%  [niftiRoiName, niftiRoi] = fs_labelFileToNiftiRoi(fs_subject,labelFileName,niftiRoiName,[hemisphere],[regMgzFile],[smoothingKernel],[fsSubDir])
 %
 % This function loads a FreeSurfer label file and generates an volume nifti
 % with the numerical values of the label at the x,y,z location of the label.
@@ -43,7 +43,7 @@ function [niftiRoiName, niftiRoi] = fs_labelFileToNiftiRoi(fs_subject,labelFileN
 % 
 % Written by Franco Pestilli (c) Stanford University, Vistasoft 2013
     
-fsSubDir = getenv('SUBJECTS_DIR');
+if notDefined('fsSubDir'), fsSubDir   = getenv('SUBJECTS_DIR');end
     
 % Get the .label file. 
 if notDefined('labelFileName')
@@ -61,7 +61,7 @@ else
 end
 
 if notDefined('hemisphere')
-    fprintf('\n[%s] No hemisphere passed in.\n assuming that the label isstored under the FreeSurfer subject folder.\n',mfilename)
+    fprintf('\n[%s] No hemisphere passed in.\n assuming that the label is stored under the FreeSurfer subject folder.\n',mfilename)
     [~,f] = fileparts(labelFileName);
     hemisphere = f(1:2); 
 end
@@ -72,22 +72,7 @@ if notDefined('regMgzFile')
     regMgzFile = fullfile(fsSubDir,fs_subject,'mri/rawavg.mgz');
 end
 
-if notDefined('niftiRoiName')
-   error('[%s] the name for the output file (niftiRoiName) is necessary...',mfilename)
-else
-    p = fileparts(niftiRoiName);
-    niftiRoiName(niftiRoiName == '.') = '_';
-    if isempty(p)
-        niftiRoiName = fullfile(fsSubDir,fs_subject,'label',niftiRoiName);       
-        fprintf('\n[%s] niftiRoiName name passed without fullpath.\n Saving the ROI in FS default location:\n%s\n', ...
-            mfilename,niftiRoiName)
-    end
-end
-
-if notDefined('smoothingKernel')
-    smoothingKernel = 3;   
-end
-niftiRoi = [];
+if notDefined('smoothingKernel'), smoothingKernel = 3;   end
 
 % Now we need to create a temporary registration file.
 % 
@@ -111,14 +96,17 @@ if smoothingKernel > 0
     fprintf('[%s] Smoothing the ROI before saving the nifti file.\n',mfilename)
     niftiRoi       = niftiRead(niftiRoiName);
     niftiRoi.data  = single(dtiCleanImageMask(niftiRoi.data,smoothingKernel));
-    niftiRoi.fname = sprintf('%s_smooth%imm', niftiRoiName, smoothingKernel);
+    niftiRoiName   = sprintf('%s_smooth%imm', niftiRoiName, smoothingKernel);
+    niftiRoi.fname = niftiRoiName;
+    fprintf('[%s] Saving NIFTI ROI: %s \n',mfilename,niftiRoiName)
     niftiWrite(niftiRoi);
 else
-   fprintf('[%s] Filling holes in the ROI before saving the nifti file.\n',mfilename)
+    fprintf('[%s] Filling holes in the ROI before saving the nifti file.\n',mfilename)
     niftiRoi       = niftiRead(niftiRoiName);
     niftiRoi.data  = single(dtiCleanImageMask(niftiRoi.data,0,1));
     niftiRoi.fname = sprintf('%s_filled', niftiRoiName);
-    niftiWrite(niftiRoi); 
+    fprintf('[%s] Saving NIFTI ROI: %s \n',mfilename,niftiRoiName)
+    niftiWrite(niftiRoi);
 end
 
 % We return the nifti strutcture as second output

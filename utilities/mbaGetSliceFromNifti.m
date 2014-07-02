@@ -43,12 +43,14 @@ if find(plane) == 1
     % dimension in acpc mm space.
     x.min = slice(1); 
     x.max = x.min;
-
-    max_corner = (xform) \ [imIndx ydim zdim 1]';
+    
+    max_corner = abs(xform) \ [imIndx ydim zdim 1]';
+    % OLD code: max_corner = (xform) \ [imIndx ydim zdim 1]';
     y.max = max_corner(2);
     z.max = max_corner(3);
-    
-    min_corner = (xform) \ [imIndx 0 0 1]';
+      
+    min_corner = abs(xform) \ [imIndx 0 0 1]';
+    % OLD code: min_corner = (xform) \ [imIndx 0 0 1]';
     y.min = min_corner(2); 
     z.min = min_corner(3);
     
@@ -60,12 +62,14 @@ elseif find(plane) == 2
     % dimension in acpc mm space.
     y.min = slice(2);
     y.max = y.min;
-    
-    max_corner = (xform) \ [xdim imIndx zdim 1]';
+        
+    max_corner = abs(xform) \ [xdim imIndx zdim 1]';
+    % OLD code: max_corner = (xform) \ [xdim imIndx zdim 1]';
     x.max = max_corner(1); 
     z.max = max_corner(3);
     
-    min_corner = (xform) \ [0 imIndx 0 1]';
+    min_corner = abs(xform) \ [0 imIndx 0 1]';  
+    % OLD code: min_corner = (xform) \ [0 imIndx 0 1]';
     x.min = min_corner(1); 
     z.min = min_corner(3);
 else
@@ -76,12 +80,14 @@ else
     % dimension in acpc mm space.
     z.min = slice(3); 
     z.max = z.min;
-
-    max_corner = (xform) \ [xdim ydim imIndx 1]';
+    
+    max_corner = abs(xform) \ [xdim ydim imIndx 1]';
+    % OLD code: max_corner = (xform) \ [xdim ydim imIndx 1]';
     x.max = max_corner(1); 
     y.max = max_corner(2);
     
-    min_corner = (xform) \ [0 0 imIndx 1]';
+    min_corner = abs(xform) \ [0 0 imIndx 1]'; 
+    % OLD code: min_corner = (xform) \ [0 0 imIndx 1]';
     x.min = min_corner(1); 
     y.min = min_corner(2);
 end

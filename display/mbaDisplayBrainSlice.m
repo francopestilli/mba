@@ -36,7 +36,7 @@ function h = mbaDisplayBrainSlice(nifti, slice, cmap, rescale,alpha)
 if notDefined('cmap'), cmap = gray(128);
 else    cmap = eval(sprintf('%s(128)',cmap));
 end
-if notDefined('rescale'), rescale = 1;end
+if notDefined('rescale'), rescale = 0;end
 if notDefined('alpha'),   alpha   = 1;end
 
 % Get the slice requested from the nifti and preprocess it for display.

@@ -43,7 +43,7 @@ if notDefined('cmap')
 else
     cmap = eval(sprintf('%s(256)',cmap));
 end
-if notDefined('oAlpha'),    oAlpha = .85;  end
+if notDefined('oAlpha'),    oAlpha = .72;  end
 if notDefined('sView'), 
     sView = mbaGetSliceView(slice);
 elseif isempty(sView)
