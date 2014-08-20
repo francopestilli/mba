@@ -1,6 +1,14 @@
 function [figureHandle, lightHandle, sHandle] = mbaDisplayConnectome(fibers,figureHandle,fiberColor,colorType,cMap, faceAlpha, fiberRadius,numSurfaceFaces)
 %
-%	function [figureHandle, lightHandle,sHandle] = mbaDisplayConnectome(fibers,figureHandle,color,fiberRadius,numSurfaceFaces);
+%	function [figureHandle, lightHandle, sHandle] = mbaDisplayConnectome( ...
+%                                                   fibers,
+%                                                   figureHandle,
+%                                                   fiberColor,
+%                                                   colorType,
+%                                                   cMap, 
+%                                                   faceAlpha, 
+%                                                   fiberRadius,
+%                                                   numSurfaceFaces)
 %
 % INPUTS:
 %     fibers         - A fiber group.
@@ -45,7 +53,7 @@ if notDefined('fiberColor'),
     fiberColor = [.84,.83,.99];
     colorType = 'single';
 end
-
+if notDefined('cMap'), cMap = 'hot';end
 if notDefined('fiberRadius'),fiberRadius = .35;end
 if notDefined('minNodesNum'), minNodesNum = 3; end
 
