@@ -18,7 +18,7 @@ function [figureHandle, lightHandle, sHandle] = mbaDisplayConnectome(fibers,figu
 % 	   lightHandle - HAndle to the current ligth used on the connectome.
 %
 %	USAGE:
-%      mbaDisplayConnectome(fg,figure);
+%      mbaDisplayConnectome(fg.fibers,figure(1));
 %
 % Written by Franco Pestilli (c) Stanford University, 2013.
 
