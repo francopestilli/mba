@@ -1,4 +1,4 @@
-# MBA - Matlab Brain Anatomy. 
+# Matlab Brain Anatomy. 
 ### Set of routines for displaying and manipulating brain anatomy using MatLab.
 
 Franco Pestilli Indiana University pestillifranco@gmail.com
