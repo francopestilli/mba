@@ -1,5 +1,5 @@
 # Matlab Brain Anatomy. 
-### Set of routines for displaying and manipulating brain anatomy using MatLab.
+### Set of MatLab routines for displaying and manipulating images of brain anatomy measured using Magnetic Resonance Imaging.
 
 Franco Pestilli Indiana University pestillifranco@gmail.com
 ![alt tag](https://cloud.githubusercontent.com/assets/2119795/6656526/77db5232-cb03-11e4-81a5-85c2ef0f6e33.png)
