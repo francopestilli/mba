@@ -11,22 +11,22 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    z can be omitted if the fiber is assuemnd 2D.
 %   
 %  OUTPUTS:
-%  - Tangent to the fiber at each node:
+%  - T: Tangent to the fiber at each node:
 %    _
 %    T = r' / |r'|
 %
-%  - Normal to the fiber at each node:
+%  - N: Normal to the fiber at each node:
 %    _ 
 %    N =  t' / |T'|
 %
-%  - Binormal to the fiber:
+%  - B: Binormal to the fiber:
 %    _   _   _
 %    B = T x N 
 %
-%  - Curvature to the fiber:
+%  - k: Curvature to the fiber:
 %    k = |T'| 
 %
-%  - Torsion of the fiber at each node:
+%  - t: Torsion of the fiber at each node:
 %    t = dot(-B',N)
 % 
 %    Example:
