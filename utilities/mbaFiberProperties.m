@@ -12,14 +12,12 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %   
 %  OUTPUTS:
 %  - Tangent to the fiber at each node:
-%    _    r'
-%    T = ---- 
-%        |r'|
+%    _
+%    T = r' / |r'|
 %
 %  - Normal to the fiber at each node:
-%    _    T'
-%    N = ----
-%        |T'|
+%    _ 
+%    N =  t' / |T'|
 %
 %  - Binormal to the fiber:
 %    _   _   _
@@ -32,7 +30,7 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    t = dot(-B',N)
 % 
 %    Example:
-%    theta = 2*pi*linspace(0,2,100);
+%    a = 2*pi*linspace(0,2,200);
 %    x = cos(theta);
 %    y = sin(theta);
 %    z = theta/(2*pi);
@@ -43,6 +41,7 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    quiver3(x,y,z,B(:,1),B(:,2),B(:,3),'color','b')
 %    legend('Curve','Tangent','Normal','Binormal')
 % 
+% FP
 
 if nargin == 2,  z = zeros(size(x)); end
 
