@@ -30,10 +30,10 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    t = dot(-B',N)
 % 
 %    Example:
-%    a = 2*pi*linspace(0,2,200);
-%    x = cos(theta);
-%    y = sin(theta);
-%    z = theta/(2*pi);
+%    angle = 2*pi*linspace(0,2,200);
+%    x = cos(angle);
+%    y = sin(angle);
+%    z = angle/(2*pi);
 %    [T,N,B,k,t] = mbaFiberProperties(x,y,z);
 %    line(x,y,z), hold on
 %    quiver3(x,y,z,T(:,1),T(:,2),T(:,3),'color','r')
