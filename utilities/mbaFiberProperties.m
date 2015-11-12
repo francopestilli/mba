@@ -32,7 +32,7 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    Example:
 %    angle = 2*pi*linspace(0,2,200);
 %    x = cos(angle);
-%    y = sin(angle);
+%    y = sin(a).*sin(a);
 %    z = angle/(2*pi);
 %    [T,N,B,k,t] = mbaFiberProperties(x,y,z);
 %    line(x,y,z), hold on
@@ -40,6 +40,7 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    quiver3(x',y',z',N(:,1),N(:,2),N(:,3),'color','g')
 %    quiver3(x',y',z',B(:,1),B(:,2),B(:,3),'color','b')
 %    legend('Curve','Tangent','Normal','Binormal')
+%    view(0,0)
 % 
 % FP
 
