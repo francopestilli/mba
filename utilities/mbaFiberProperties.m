@@ -36,9 +36,9 @@ function [T,N,B,k,t] = mbaFiberProperties(x,y,z)
 %    z = angle/(2*pi);
 %    [T,N,B,k,t] = mbaFiberProperties(x,y,z);
 %    line(x,y,z), hold on
-%    quiver3(x,y,z,T(:,1),T(:,2),T(:,3),'color','r')
-%    quiver3(x,y,z,N(:,1),N(:,2),N(:,3),'color','g')
-%    quiver3(x,y,z,B(:,1),B(:,2),B(:,3),'color','b')
+%    quiver3(x',y',z',T(:,1),T(:,2),T(:,3),'color','r')
+%    quiver3(x',y',z',N(:,1),N(:,2),N(:,3),'color','g')
+%    quiver3(x',y',z',B(:,1),B(:,2),B(:,3),'color','b')
 %    legend('Curve','Tangent','Normal','Binormal')
 % 
 % FP
