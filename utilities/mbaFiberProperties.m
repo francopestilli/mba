@@ -93,6 +93,7 @@ function N = vdot(A, B)
  N = zeros(size(A,1),1); 
  for i=1:size(A,1), N(i) = dot(A(i,:), B(i,:)); 
 end
+end
 
 function N = mag(T,n),
 % Compute magnitude of a vector (Nx3)
