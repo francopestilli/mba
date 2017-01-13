@@ -25,10 +25,6 @@ function [figureHandle, lightHandle, sHandle] = mbaDisplayConnectome(fibers,figu
 tic
 fprintf('[%s] Displaying connectome... ',mfilename);
 
-% Handling parallel processing
-poolwasopen=1; % if a matlabpool was open already we do not open nor close one
-if (matlabpool('size') == 0), matlabpool open; poolwasopen=0; end
-
 % Check if a fgure handle was passed in, otherwise open a figure
 if notDefined('figureHandle'), figureHandle = figure('Renderer','OpenGL');end
 
@@ -137,7 +133,6 @@ lightHandle = formatFigure(gcf);
 % Done
 t = toc;
 fprintf('done in  %2.3f seconds at %2.3f ms/fiber.\n',t,(t/numFibers)*1000);
-	    keyboard
 
 end % end MAIN function
 
