@@ -1,4 +1,4 @@
-function h = mbaDisplayBrainSlice(nifti, slice, ax, cmap, rescale,alpha)
+function h = mbaDisplayBrainSlice(nifti, slice, cmap, rescale,alpha)
 % 
 % Add a slice from a nifti image to a matlab plot
 %
@@ -49,7 +49,7 @@ if notDefined('alpha'),   alpha   = 1;end
 if find(plane) == 1
     % Add the img to the current 3D plot
     z_dims = [z.min z.max; z.min z.max];
-    h = surf(ax,[x.min x.max],[y.min y.max],z_dims,...
+    h = surf([x.min x.max],[y.min y.max],z_dims,...
         image_rgb,'facecolor','texture','faceAlpha',alpha);
 elseif find(plane) == 2
     % The img dimensions must be permuted to match what is expected in
@@ -57,16 +57,17 @@ elseif find(plane) == 2
     image_rgb = permute(image_rgb,[2 1 3]);
     % Add the img to the current 3D plot
     z_dims = [z.min z.min;   z.max z.max];
-    h = surf(ax,[x.min x.max],[y.min y.max],z_dims,...
+    h = surf([x.min x.max],[y.min y.max],z_dims,...
         image_rgb,'facecolor','texture','FaceAlpha',alpha);
 elseif find(plane) == 3
     % The img dimensions must be permuted to match what is expected in
     % surf
     image_rgb = permute(image_rgb,[2 1 3]);
     % Add the img to the current 3D plot
-    h = surf(ax, [x.min x.max],[y.min y.max],repmat(z.min, [2 2]),...
+    h = surf([x.min x.max],[y.min y.max],repmat(z.min, [2 2]),...
         image_rgb,'facecolor','texture','FaceAlpha',alpha);
 end
+axis off
 
 % Rescale the axis to fit the img
 if rescale == 1
