@@ -5,7 +5,7 @@ Franco Pestilli
 
 The University of Texas at Austin 
 
-pestilli@utexs.edu
+pestilli@utexas.edu
 
 ![alt tag](https://cloud.githubusercontent.com/assets/2119795/6656526/77db5232-cb03-11e4-81a5-85c2ef0f6e33.png)
 
