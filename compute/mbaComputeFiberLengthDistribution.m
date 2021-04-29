@@ -27,7 +27,13 @@ if notDefined('displayDist')
 end
 
 % Calculate the length in mm of each fiber in the fiber group
-Lmm = cellfun('length',fg.fibers);
+streamsTotal=fg.fibers;
+Lmm =[];
+for istreamlines=1:length(streamsTotal)
+    Lmm(istreamlines)=sum(sqrt(sum(diff(streamsTotal{istreamlines},1,2).^2)));
+end
+clear streamsTotal
+
 
 % Z-score the length
 % Here we take the log first so that the distribution of Lmm is 'more'
